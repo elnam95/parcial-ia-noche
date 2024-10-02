@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inteligencia Artificial, Algoritmos de Búsqueda y Comparación de DFS y BFS</title>
+    <title>Inteligencia Artificial, Ciberseguridad y Algoritmos de Búsqueda</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,6 +13,7 @@
         }
         h1 {
             color: #2c3e50;
+            text-align: center; /* Centrar el texto de los encabezados h1 */
         }
         h2 {
             color: #34495e;
@@ -24,78 +25,25 @@
             overflow: auto;
         }
         table {
-            width: 90%;
+            width: 60%;
             margin: 20px auto;
             border-collapse: collapse;
             background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        table, th, td {
+            border: 1px solid black;
         }
         th, td {
-            padding: 15px;
+            padding: 10px;
             text-align: center;
-            border-bottom: 1px solid #ddd;
         }
         th {
-            background-color: #4CAF50;
-            color: #fff;
-            font-size: 18px;
-        }
-        td {
-            font-size: 16px;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-        caption {
-            margin-bottom: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #555;
-        }
-        /* Responsive table */
-        @media (max-width: 768px) {
-            table {
-                width: 100%;
-            }
-            th, td {
-                display: block;
-                width: 100%;
-                box-sizing: border-box;
-            }
-            th {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-            tr {
-                border: 1px solid #ddd;
-                margin-bottom: 10px;
-                display: block;
-                padding: 10px;
-                position: relative;
-            }
-            td {
-                border: none;
-                position: relative;
-                padding-left: 50%;
-                text-align: right;
-            }
-            td::before {
-                content: attr(data-label);
-                position: absolute;
-                left: 0;
-                width: 50%;
-                padding-left: 10px;
-                font-weight: bold;
-                text-align: left;
-            }
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
+
     <h1>Clase 15 de Agosto de 2024</h1>
     <p>
         En el webinar sobre Ciberseguridad, Inteligencia Artificial y Computación en la Nube, se destacó la importancia de la ciberseguridad 
@@ -151,22 +99,68 @@
 
     <h1>Modelo de Red Neuronal con TensorFlow</h1>
     <pre>
-import tensorflow as tf
-import numpy as np
+import tensorflow as tf  # Importamos la librería TensorFlow para crear redes neuronales
+import numpy as np  # Importamos NumPy para manejar arreglos numéricos
 
+# Datos de entrada (temperaturas en grados Celsius)
 celsius = np.array([-40, -10, 0, 8, 15, 22, 38], dtype=float)
+
+# Datos de salida (temperaturas en grados Fahrenheit)
 fahrenheit = np.array([-40, 14, 32, 46, 59, 72, 100], dtype=float)
 
+# Definimos la primera capa oculta con 3 neuronas, tomando un valor de entrada
 oculta1 = tf.keras.layers.Dense(units=3, input_shape=[1])
+
+# Definimos la segunda capa oculta con 3 neuronas
 oculta2 = tf.keras.layers.Dense(units=3)
+
+# Definimos la capa de salida con una sola neurona (predicción)
 salida = tf.keras.layers.Dense(units=1)
 
+# Creamos el modelo con las capas definidas
 modelo = tf.keras.Sequential([oculta1, oculta2, salida])
-modelo.compile(optimizer=tf.keras.optimizers.Adam(0.1), loss='mean_squared_error')
 
+# Compilamos el modelo utilizando el optimizador Adam y la función de pérdida de error cuadrático medio
+modelo.compile(
+    optimizer=tf.keras.optimizers.Adam(0.1),  # Tasa de aprendizaje 0.1
+    loss='mean_squared_error'  # Medida de error para la regresión
+)
+
+print("Comenzando el entrenamiento...")  # Mensaje informativo
+# Entrenamos el modelo con 1000 épocas (iteraciones) sin mostrar detalles (verbose=False)
 historial = modelo.fit(celsius, fahrenheit, epochs=1000, verbose=False)
-resultado = modelo.predict([100.0])
+print("¡Entrenamiento completado!")  # Indicamos que el entrenamiento terminó
+
+# Importamos Matplotlib para graficar los resultados
+import matplotlib.pyplot as plt
+
+# Configuramos el gráfico
+plt.xlabel("# Epoca")
+plt.ylabel("Magnitud de pérdida")
+plt.plot(historial.history["loss"])  # Graficamos la pérdida a lo largo de las épocas
+
+print("Hagamos una predicción...")  # Informamos que haremos una predicción
+resultado = modelo.predict([100.0])  # Realizamos la predicción para 100°C
+print(f"El resultado es {resultado} grados Fahrenheit")  # Mostramos el resultado
+
+# Mostramos los pesos aprendidos por las capas ocultas y de salida
+print("Pesos de la primera capa oculta:", oculta1.get_weights())
+print("Pesos de la segunda capa oculta:", oculta2.get_weights())
+print("Pesos de la capa de salida:", salida.get_weights())
     </pre>
+    <figure>
+    <img src="C:/Users/ASUS/proyectos python/maze2/maze.png" alt="maze" width="600">
+    <figcaption>maze: Laberinto original</figcaption>
+</figure>
+<figure>
+    <img src="C:/Users/ASUS/proyectos python/maze2/maze_bfs.png" alt="maze_bfs" width="600">
+    <figcaption>maze_bfs: Laberinto resuelto con BFS</figcaption>
+</figure>
+<figure>
+    <img src="C:/Users/ASUS/proyectos python/maze2/maze_dfs.png" alt="maze_dfs" width="600">
+    <figcaption>maze_dfs: Laberinto resuelto con DFS</figcaption>
+</figure>
+    
 
     <h1>Algoritmo de Búsqueda Binaria</h1>
     <pre>
@@ -192,30 +186,28 @@ resultado = busqueda_binaria(numeros, 5)
 print("El índice de 5 es:", resultado)
     </pre>
 
-    <h1>Comparación de DFS y BFS en Laberintos</h1>
+    <h1>Comparación de Algoritmos en Laberintos</h1>
     <table>
-        <caption>Resultados de la Búsqueda</caption>
+        <caption>Tabla Comparativa de Algoritmos DFS y BFS</caption>
         <tr>
-            <th>Mazmorra</th>
-            <th>Resultado DFS</th>
-            <th>Resultado BFS</th>
+            <th>Algoritmo</th>
+            <th>Mazmorra 1 (Estados Explorados)</th>
         </tr>
         <tr>
-            <td>Mazmorra 1</td>
-            <td>False</td>
-            <td>False</td>
+            <td>DFS</td>
+            <td id="maze1_dfs">298</td>
         </tr>
         <tr>
-            <td>Mazmorra 2</td>
-            <td>True</td>
-            <td>True</td>
+            <td>BFS</td>
+            <td id="maze1_bfs">1197</td>
         </tr>
     </table>
 
-    <h2>Conclusiones</h2>
-    <p>
-        En esta clase, exploramos cómo la inteligencia artificial ha transformado la forma en que interactuamos con la tecnología, 
-        así como los principios fundamentales de la ciberseguridad y la importancia de proteger nuestros datos personales.
-    </p>
+    <script>
+        // Asignar los valores obtenidos para la comparación de laberinto 1
+        document.getElementById('maze1_dfs').textContent = 298;  // DFS valor para Maze 1
+        document.getElementById('maze1_bfs').textContent = 1197;  // BFS valor para Maze 1
+    </script>
+
 </body>
 </html>
