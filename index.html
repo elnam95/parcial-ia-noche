@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inteligencia Artificial, Ciberseguridad y Algoritmos de Búsqueda</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center; /* Centrar el texto de los encabezados h1 */
+        }
+        h2 {
+            color: #34495e;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ccc;
+            overflow: auto;
+        }
+        table {
+            width: 60%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Clase 15 de Agosto de 2024</h1>
+    <p>
+        En el webinar sobre Ciberseguridad, Inteligencia Artificial y Computación en la Nube, se destacó la importancia de la ciberseguridad 
+        para prevenir ataques de malware y phishing, los cuales buscan robar información sin el consentimiento de las personas.
+    </p>
+    <p>
+        Además, se resaltó el uso de la IA y la computación en la nube como herramientas para reducir costos de administración 
+        y agilizar la gestión de procesos como transacciones, retiros y transferencias de dinero. Estas tecnologías permiten 
+        garantizar la seguridad de las personas y cómo manejan su dinero.
+    </p>
+    
+    <h1>¿Qué es la Inteligencia Artificial?</h1>
+    <p>
+        La inteligencia artificial (IA) es un amplio campo de la informática centrado en la creación de sistemas y tecnologías capaces de realizar tareas 
+        que normalmente requieren inteligencia humana, como la generación de código para aplicaciones. Estas tareas incluyen:
+    </p>
+    <ul>
+        <li>Reconocimiento de voz</li>
+        <li>Aprendizaje automático</li>
+        <li>Toma de decisiones</li>
+        <li>Resolución de problemas</li>
+        <li>Percepción visual</li>
+        <li>Traducción de idiomas</li>
+        <li>Y más</li>
+    </ul>
+
+    <h1>Clase 22 de Agosto de 2024</h1>
+    <h2>Origen de la Inteligencia Artificial</h2>
+    <p>
+        El origen de la inteligencia artificial se remonta a los años 30, con el trabajo de Alan Turing en la máquina Enigma, 
+        capaz de descifrar los mensajes secretos de los nazis durante la Segunda Guerra Mundial.
+    </p>
+
+    <h2>Inteligencia Artificial Moderna</h2>
+    <p>
+        Aunque Alan Turing sentó bases sólidas en el estudio de la IA, no fue hasta 1956 que John McCarthy, Marvin Minsky y Claude Shannon 
+        popularizaron el término "Inteligencia Artificial" en la conferencia "Dartmouth Summer Research Project on Artificial Intelligence".
+    </p>
+
+    <h1>Fundamentos Filosóficos de la Inteligencia Artificial</h1>
+    <p>
+        Los principales enfoques filosóficos que influyen en la IA incluyen:
+    </p>
+    <ul>
+        <li>Idealismo</li>
+        <li>Materialismo</li>
+        <li>Empirismo</li>
+        <li>Existencialismo</li>
+        <li>Pragmatismo</li>
+        <li>Humanismo</li>
+        <li>Racionalismo</li>
+    </ul>
+
+    <h1>Modelo de Red Neuronal con TensorFlow</h1>
+    <pre>
+import tensorflow as tf  # Importamos la librería TensorFlow para crear redes neuronales
+import numpy as np  # Importamos NumPy para manejar arreglos numéricos
+
+# Datos de entrada (temperaturas en grados Celsius)
+celsius = np.array([-40, -10, 0, 8, 15, 22, 38], dtype=float)
+
+# Datos de salida (temperaturas en grados Fahrenheit)
+fahrenheit = np.array([-40, 14, 32, 46, 59, 72, 100], dtype=float)
+
+# Definimos la primera capa oculta con 3 neuronas, tomando un valor de entrada
+oculta1 = tf.keras.layers.Dense(units=3, input_shape=[1])
+
+# Definimos la segunda capa oculta con 3 neuronas
+oculta2 = tf.keras.layers.Dense(units=3)
+
+# Definimos la capa de salida con una sola neurona (predicción)
+salida = tf.keras.layers.Dense(units=1)
+
+# Creamos el modelo con las capas definidas
+modelo = tf.keras.Sequential([oculta1, oculta2, salida])
+
+# Compilamos el modelo utilizando el optimizador Adam y la función de pérdida de error cuadrático medio
+modelo.compile(
+    optimizer=tf.keras.optimizers.Adam(0.1),  # Tasa de aprendizaje 0.1
+    loss='mean_squared_error'  # Medida de error para la regresión
+)
+
+print("Comenzando el entrenamiento...")  # Mensaje informativo
+# Entrenamos el modelo con 1000 épocas (iteraciones) sin mostrar detalles (verbose=False)
+historial = modelo.fit(celsius, fahrenheit, epochs=1000, verbose=False)
+print("¡Entrenamiento completado!")  # Indicamos que el entrenamiento terminó
+
+# Importamos Matplotlib para graficar los resultados
+import matplotlib.pyplot as plt
+
+# Configuramos el gráfico
+plt.xlabel("# Epoca")
+plt.ylabel("Magnitud de pérdida")
+plt.plot(historial.history["loss"])  # Graficamos la pérdida a lo largo de las épocas
+
+print("Hagamos una predicción...")  # Informamos que haremos una predicción
+resultado = modelo.predict([100.0])  # Realizamos la predicción para 100°C
+print(f"El resultado es {resultado} grados Fahrenheit")  # Mostramos el resultado
+
+# Mostramos los pesos aprendidos por las capas ocultas y de salida
+print("Pesos de la primera capa oculta:", oculta1.get_weights())
+print("Pesos de la segunda capa oculta:", oculta2.get_weights())
+print("Pesos de la capa de salida:", salida.get_weights())
+    </pre>
+    <figure>
+    <img src="./images/maze.png" alt="maze" width="600">
+    <figcaption>maze: Laberinto original</figcaption>
+</figure>
+<figure>
+    <img src="./images/maze_bfs.png" alt="maze_bfs" width="600">
+    <figcaption>maze_bfs: Laberinto resuelto con BFS</figcaption>
+</figure>
+<figure>
+    <img src="./images/maze_dfs.png" alt="maze_dfs" width="600">
+    <figcaption>maze_dfs: Laberinto resuelto con DFS</figcaption>
+</figure>
+    
+
+    <h1>Algoritmo de Búsqueda Binaria</h1>
+    <pre>
+def busqueda_binaria(lista, objetivo):
+    bajo = 0
+    alto = len(lista) - 1
+
+    while bajo <= alto:
+        medio = (bajo + alto) // 2
+        if lista[medio] == objetivo:
+            return medio
+        elif lista[medio] < objetivo:
+            bajo = medio + 1
+        else:
+            alto = medio - 1
+    return -1
+    </pre>
+
+    <h2>Ejemplo de Búsqueda Binaria</h2>
+    <pre>
+numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+resultado = busqueda_binaria(numeros, 5)
+print("El índice de 5 es:", resultado)
+    </pre>
+
+    <h1>Comparación de Algoritmos en Laberintos</h1>
+    <table>
+        <caption>Tabla Comparativa de Algoritmos DFS y BFS</caption>
+        <tr>
+            <th>Algoritmo</th>
+            <th>Mazmorra 1 (Estados Explorados)</th>
+        </tr>
+        <tr>
+            <td>DFS</td>
+            <td id="maze1_dfs">298</td>
+        </tr>
+        <tr>
+            <td>BFS</td>
+            <td id="maze1_bfs">1197</td>
+        </tr>
+    </table>
+
+    <script>
+        // Asignar los valores obtenidos para la comparación de laberinto 1
+        document.getElementById('maze1_dfs').textContent = 298;  // DFS valor para Maze 1
+        document.getElementById('maze1_bfs').textContent = 1197;  // BFS valor para Maze 1
+    </script>
+
+</body>
+</html>
